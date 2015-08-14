@@ -30,18 +30,18 @@ class CalculatorBrain{
     
     private var opStack = [Op]()
     
-    private var knowOps = [String: Op]()
+    private var knownOps = [String: Op]()
     
     init() {
         func learnOp(op: Op) {
-            knowOps[op.description] = op
+            knownOps[op.description] = op
             
         }
-        knowOps["×"] = Op.BinaryOperation("×",* )
-        knowOps["−"] = Op.BinaryOperation("×") {$1 * $0 }
-        knowOps["+"] = Op.BinaryOperation("×", + )
-        knowOps["÷"] = Op.BinaryOperation("×"){ $1 * $0 }
-        knowOps["√"] = Op.UnaryOperation("√",sqrt)
+        knownOps["×"] = Op.BinaryOperation("×",* )
+        knownOps["−"] = Op.BinaryOperation("−") {$1 * $0 }
+        knownOps["+"] = Op.BinaryOperation("+", + )
+        knownOps["÷"] = Op.BinaryOperation("÷"){ $1 * $0 }
+        knownOps["√"] = Op.UnaryOperation("√",sqrt)
         
     }
     
@@ -82,7 +82,7 @@ class CalculatorBrain{
     }
     
     func performOperation(symbol:String)  -> Double?  {
-        if let operation = knowOps[symbol] {
+        if let operation = knownOps[symbol] {
             opStack.append(operation)
         }
         return evaluate()
